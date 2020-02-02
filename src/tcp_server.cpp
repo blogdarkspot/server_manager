@@ -4,7 +4,7 @@
 namespace SM {
 
     TcpServer::TcpServer(boost::asio::io_context &exec, const ServerConfiguration &configuration) :
-    mAcceptor(exec)
+    mAcceptor(exec), mName(configuration.name)
     {
         boost::asio::ip::tcp::resolver resolver(exec);
         boost::asio::ip::tcp::endpoint endpoint = *resolver.resolve(configuration.address, std::to_string(configuration.port));
@@ -17,7 +17,7 @@ namespace SM {
 
     void TcpServer::run()
     {
-        std::cout << "running() " << std::endl;
+        std::cout << "running " << mName << std::endl;
         mAcceptor.async_accept([this](boost::system::error_code ec, boost::asio::ip::tcp::socket socket)
         {
             if(ec)

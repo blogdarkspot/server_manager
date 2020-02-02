@@ -1,6 +1,8 @@
 #include "configuration.h"
 #include "iserver.h"
 
+#include <string>
+
 #include <boost/asio.hpp>
 
 namespace SM {
@@ -16,5 +18,6 @@ namespace SM {
         private:
 
         boost::asio::ip::tcp::acceptor mAcceptor;
+        std::string mName;
     };
 };

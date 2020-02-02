@@ -3,10 +3,12 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 namespace SM {
 
     struct ServerConfiguration {
+        std::string name;
         std::string address;
         unsigned short port;       
     };
@@ -20,9 +22,19 @@ namespace SM {
             }
 
             explicit Configuration(int argc, char **argv);
+
+            std::vector<ServerConfiguration> getServersConfiguration () const
+            {
+                return mServersConfig;
+            }
+
+    private:
+
+        void parserFile();
+
+        std::vector<ServerConfiguration> mServersConfig;    
     };
 
-    
 };
 
 #endif //CONFIGURATION_H
