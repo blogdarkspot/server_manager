@@ -1,7 +1,9 @@
 #include "configuration.h"
+#include "tcp_session.h"
 #include "iserver.h"
 
 #include <string>
+#include <set>
 
 #include <boost/asio.hpp>
 
@@ -19,5 +21,9 @@ namespace SM {
 
         boost::asio::ip::tcp::acceptor mAcceptor;
         std::string mName;
+
+        std::set<std::shared_ptr<TCPSession>> mSessions;
+
+        void closeSession(std::shared_ptr<TCPSession> session);
     };
 };

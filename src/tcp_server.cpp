@@ -20,12 +20,25 @@ namespace SM {
         std::cout << "running " << mName << std::endl;
         mAcceptor.async_accept([this](boost::system::error_code ec, boost::asio::ip::tcp::socket socket)
         {
-            if(ec)
+            if(!mAcceptor.is_open())
             {
-                std::cout << ec << std::endl;
+                return;
+            }
+            if(!ec)
+            {
+                auto session = std::make_shared<TCPSession>(std::move(socket), std::bind(&TcpServer::closeSession, this, std::placeholders::_1));
+                session->start();
+                mSessions.insert(session);
             }
             run();
         });
+    }
+
+    void TcpServer::closeSession(std::shared_ptr<TCPSession> session)
+    {
+        std::cout << "close session " << std::endl;
+        session->stop();
+        mSessions.erase(session);
     }
 
     void TcpServer::stop()
