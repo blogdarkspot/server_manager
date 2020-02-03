@@ -1,3 +1,6 @@
+#ifndef TCP_SERVER_H
+#define TCP_SERVER_H
+
 #include "configuration.h"
 #include "tcp_session.h"
 #include "iserver.h"
@@ -27,3 +30,5 @@ namespace SM {
         void closeSession(std::shared_ptr<TCPSession> session);
     };
 };
+
+#endif
